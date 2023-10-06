@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class LifeboatController : MonoBehaviour
 {
-    private LifeboatKeyController lifeboatKey;
+    private LeverController lever;
     private Animator anim;
     void Start()
     {
-        lifeboatKey = GameObject.FindWithTag("LifeboatKey").GetComponent<LifeboatKeyController>();
+        lever = GameObject.FindWithTag("Lever").GetComponent<LeverController>();
         anim = GetComponent<Animator>();
     }
     void Update()
     {
-        if(lifeboatKey == null)
+        if(lever == null)
         {
-            Debug.Log("LifeboatKey not found!");
+            Debug.Log("Lever not found!");
             return;
         }
-        if(lifeboatKey.isPickedUp == true)
+        if(lever.isPulled == true)
         {
             anim.SetTrigger("lower");
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -49,7 +50,6 @@ public class PlayerController : MonoBehaviour
     void MovePlayer()
     {
         Vector3 moveOffset = transform.TransformDirection(movement) * Time.fixedDeltaTime;
-        Debug.Log(moveOffset);
         RaycastHit hit;
         // Cast downwards from the base of the capsule collider (thus slightly above the player's feet)
         if (Physics.Raycast(transform.position + Vector3.up * playerCollider.radius, Vector3.down, out hit, stepHeight + playerCollider.radius))
@@ -73,5 +73,13 @@ public class PlayerController : MonoBehaviour
         cameraVerticalAngle = Mathf.Clamp(cameraVerticalAngle, -90.0f, 90.0f);
 
         cameraTransform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }

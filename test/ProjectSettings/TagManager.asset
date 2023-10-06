@@ -7,6 +7,8 @@ TagManager:
   - Door
   - LifeboatKey
   - Stairs
+  - Water
+  - Lever
   layers:
   - Default
   - TransparentFX
