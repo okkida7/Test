@@ -9,6 +9,8 @@ public class OpenDoor : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
+
+    // If the player is in the trigger zone, open the door
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -16,6 +18,8 @@ public class OpenDoor : MonoBehaviour
             anim.SetBool("open", true);
         }
     }
+
+    // If the player leaves the trigger zone, close the door
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

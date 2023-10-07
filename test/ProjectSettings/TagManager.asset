@@ -9,6 +9,8 @@ TagManager:
   - Stairs
   - Water
   - Lever
+  - RoomKey
+  - Gun
   layers:
   - Default
   - TransparentFX

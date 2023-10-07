@@ -10,6 +10,8 @@ public class LifeboatKeyController : MonoBehaviour
     {
         meshRenderer = GetComponent<MeshRenderer>();
     }
+
+    // If the player is in the trigger zone, hide the key and set isPickedUp to true
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

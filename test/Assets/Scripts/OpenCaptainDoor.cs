@@ -9,6 +9,8 @@ public class OpenCaptainDoor : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
+
+    //  If the player is in the trigger zone, open the door
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
