@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public LayerMask groundLayer;
     public float speed = 5.0f;
     public float mouseSensitivity = 2.0f;
     public Transform cameraTransform;
@@ -48,15 +49,24 @@ public class PlayerController : MonoBehaviour
     void MovePlayer()
     {
         Vector3 moveOffset = transform.TransformDirection(movement) * Time.fixedDeltaTime;
+        Vector3 rayOrigin = transform.position;
+        float rayDistance = playerCollider.height * 0.5f + stepHeight;
         RaycastHit hit;
         // Cast downwards from the base of the capsule collider (thus slightly above the player's feet)
-        if (Physics.Raycast(transform.position + Vector3.up * playerCollider.radius, Vector3.down, out hit, stepHeight + playerCollider.radius))
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, rayDistance, groundLayer))
         {
-            if (hit.distance < playerCollider.radius)  // Meaning we are on top of something
-            {
-                moveOffset.y -= stepHeight - hit.distance;  // Adjust height based on difference
-            }
+        float playerHeightFromGround = hit.distance;
+        float desiredHeightFromGround = playerCollider.height * 0.5f + 0.1f; // Half of the player's height plus a small buffer.
+
+        if (playerHeightFromGround < desiredHeightFromGround)
+        {
+            moveOffset.y += desiredHeightFromGround - playerHeightFromGround;  // Raise the player a little.
         }
+        else if (playerHeightFromGround > desiredHeightFromGround + stepHeight)
+        {
+            moveOffset.y -= playerHeightFromGround - (desiredHeightFromGround + stepHeight); // Lower the player a bit.
+        }
+            }
         rb.MovePosition(rb.position + moveOffset);
     }
 
